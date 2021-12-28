@@ -1,0 +1,7 @@
+textarea.custom_text.w-100 {
+    padding: 0.875rem 1.375rem !IMPORTANT;
+    border: 1px solid #dee2e6 !IMPORTANT;
+    font-weight: 400;
+    font-size: 0.875rem;
+    border-radius: 4px !IMPORTANT;
+}
