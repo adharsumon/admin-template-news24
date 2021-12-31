@@ -1,4 +1,7 @@
-<?php include "connection.php"; ?>
+<?php 
+include "connection.php"; 
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +25,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="assets/css/vertical-layout-light/style.css">
   <!-- custom:css -->
-  <link rel="stylesheet" href="assets/css/vertical-layout-light/custom.css">
+  <link rel="stylesheet" href="assets/css/custom.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="assets/images/favicon.png" />
 </head>

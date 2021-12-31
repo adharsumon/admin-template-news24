@@ -34,6 +34,7 @@
   <script src="assets/js/dashboard.js"></script>
   <script src="assets/js/Chart.roundedBarCharts.js"></script>
   <!-- End custom js for this page-->
+  <?php ob_end_flush(); ?>
 </body>
 
 </html>
