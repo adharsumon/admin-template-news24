@@ -67,7 +67,7 @@
                                                     ?>
 
                                                         <tr>
-                                                        <td>01</td>
+                                                        <td><?php echo $count; ?></td>
                                                         <td>
                                                             <img src="assets/images/users/<?php echo $u_image; ?>" width="80px" >
                                                         </td>
@@ -152,7 +152,9 @@
                   <p class="card-description">
                     User Form
                   </p>
-                  <form class="forms-sample">
+
+
+                  <form class="forms-sample" method="POST" enctype="multipart/form-data">
                     <div class="form-group row">
                       <label for="username" class="col-sm-3 col-form-label">User Name</label>
                       <div class="col-sm-9">
@@ -224,9 +226,64 @@
                       </div>
                     </div>
 
-                    <button type="submit" class="btn btn-lg btn-success me-2 text-light">Submit</button>
+                    <button type="submit" name="add_user" class="btn btn-lg btn-success me-2 text-light">Submit</button>
                     <button class="btn btn-lg btn-light">Cancel</button>
                   </form>
+
+                  <!-- Add User Code start Here -->
+                  <?php 
+
+                  if(isset($_POST['add_user'])){
+                    $username       =$_POST['username'];
+                    $useremail      =$_POST['useremail'];
+                    $password       =$_POST['password'];
+                    $phone          =$_POST['phone'];
+                    $address        =$_POST['address'];
+                    $gender         =$_POST['gender'];
+                    // $biodata        =$_POST['biodata'];
+                    $biodata        =mysqli_real_escape_string($conn,$_POST['biodata']);
+                    $user_role      =$_POST['user_role'];
+                    $user_image     =$_FILES['image']['name'];
+                    $file_size     =$_FILES['image']['size'];
+                    $tmp_name       =$_FILES['image']['tmp_name'];
+                    
+                    $split_name     = explode('.', $_FILES['image']['name']);
+                    $extn           = end($split_name);
+                    $extn           = strtolower($extn);
+                    $extensions     = array('png', 'jpg', 'jpeg');
+                    if(in_array($extn, $extensions) === true && $file_size < 2097152){
+                      // image
+                      $random = rand();
+                      $updated_name = $random.'_'.$user_image;
+                      move_uploaded_file($tmp_name, 'assets/images/users/'.$updated_name);
+                      $hass_password = sha1($password);
+
+                      // save the value into database
+                      if(!empty($username) && !empty($useremail) && !empty($password)){
+                        $add_query = "INSERT INTO users (u_name,u_mail,u_pass,u_address,u_phone,u_biodata,u_gender,user_role,u_status,	u_image) VALUES ('$username', '$useremail', '$hass_password', '$address', '$phone', '$biodata', '$gender', '$user_role', '0', '$updated_name')";
+                        $result = mysqli_query($conn, $add_query);
+                        if($result){
+                          header('Location: users.php');
+                        }else{
+                          die('User information add error'.mysqli_error($conn));
+                        }
+                      }else{
+                        echo '<span class="alert alert-danger">Please fill the all information </span>';
+                      }
+                     
+                    }else{
+                      // not image
+                      echo '<span class="alert alert-danger">Please insert an image</span>';
+                    }                   
+
+
+                  }// if
+                  
+                  ?>
+                  <!-- Add User Code end Here -->
+
+
+
                 </div>
               </div>
             </div>
