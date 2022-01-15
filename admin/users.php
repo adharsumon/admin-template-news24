@@ -100,18 +100,18 @@
                                                             <a href=""><i class="mdi mdi-grease-pencil"></i> </a>
                                                             <a href="" class="ms-2"><i class="mdi mdi-account-star"></i> </a>
                                                             <a href="" class="ms-2" data-bs-toggle="modal"
-                                                                data-bs-target="#delete_id"> <i
+                                                                data-bs-target="#delete_id<?php echo $u_id?>"> <i
                                                                     class="mdi mdi-delete text-danger"></i> </a>
 
                                                             <!-- Modal -->
-                                                            <div class="modal fade" id="delete_id" tabindex="-1"
+                                                            <div class="modal fade" id="delete_id<?php echo $u_id?>" tabindex="-1"
                                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
 
                                                                         <div class="modal-body text-center">
                                                                             <h2 class="mb-4">Are You Sure?</h2>
-                                                                            <a href="" type="button"
+                                                                            <a href="users.php?do=Delete&delete_id=<?php echo $u_id; ?>" type="button"
                                                                                 class="btn btn-lg btn-danger text-light">Yes</a>
                                                                             <button type="button"
                                                                                 class="btn btn-lg btn-secondary"
@@ -302,6 +302,26 @@
 
                     elseif($do == 'Delete'){
                         // Delete a new user
+                        if(isset($_GET['delete_id'])){
+                          $delete_id = $_GET['delete_id'];
+
+                          // Delete user image first 
+                          $del_user = "SELECT u_image FROM users WHERE u_id='$delete_id'";
+                          $result = mysqli_query($conn, $del_user);
+                          while($row =mysqli_fetch_assoc($result)){
+                            $u_image =$row['u_image'];
+                          }
+                          unlink('assets/images/users/'.$u_image);
+
+                          // Delete user info from database
+                          $del_query = "DELETE FROM users where u_id='$delete_id'";
+                          $del_res = mysqli_query($conn, $del_query);
+                          if($del_res){
+                            header('Location: users.php');
+                          }else{
+                            die('User delete error'.mysqli_error($conn));
+                          }
+                        }
                     }
 
                  ?>
