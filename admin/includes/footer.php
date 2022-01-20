@@ -28,6 +28,13 @@
   <script src="assets/js/template.js"></script>
   <script src="assets/js/settings.js"></script>
   <script src="assets/js/todolist.js"></script>
+
+  <!-- profile js link here -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+  <!-- login js link here -->
+  
+
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
