@@ -2,6 +2,10 @@
 include "connection.php"; 
 include "function.php"; 
 ob_start();
+session_start();
+if(empty($_SESSION['u_id'])){
+  header('Location: index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -209,18 +213,40 @@ ob_start();
           </li>
           <li class="nav-item dropdown d-none d-lg-block user-dropdown">
             <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image"> </a>
+              <?php 
+                  if(empty($_SESSION['u_image'])){
+                    ?>
+                    <img src="assets/images/users/default.png" width="40px">
+                    <?php
+                  }else{
+                    ?>
+                    <img class="img-xs rounded-circle" src="assets/images/users/<?php echo $_SESSION['u_image']; ?>" style="width: 40px;height: 40px !important;" alt="Profile image">
+                    <?php
+                  }
+                ?>
+               </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
-                <img class="img-md rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-                <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+                <?php 
+                 if(empty($_SESSION['u_image'])){
+                  ?>
+                  <img src="assets/images/users/default.png" width="40px">
+                  <?php
+                }else{
+                  ?>
+                  <img class="img-xs rounded-circle" src="assets/images/users/<?php echo $_SESSION['u_image']; ?>" style="width: 40px;height: 40px !important;" alt="Profile image">
+                  <?php
+                }
+                ?>
+                
+                <p class="mb-1 mt-3 font-weight-semibold"><?php echo $_SESSION['u_name']; ?></p>
+                <p class="fw-light text-muted mb-0"><?php echo $_SESSION['u_mail']; ?></p>
               </div>
               <a class="dropdown-item" href="profile.php"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+              <a class="dropdown-item" href="includes/logout.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
             </div>
           </li>
         </ul>

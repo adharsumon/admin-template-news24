@@ -1,10 +1,17 @@
+<?php 
+
+    include "includes/connection.php";
+    ob_start();
+    session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign In Form News24</title>
+    <title>News24 Login</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="login-assets/fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -30,7 +37,7 @@
                         <form method="POST" class="register-form" id="login-form">
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="your_name" id="your_name" placeholder="Your Name"/>
+                                <input type="text" name="your_name" id="your_name" placeholder="Name / Email"/>
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
@@ -44,6 +51,45 @@
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
                             </div>
                         </form>
+
+                            <?php 
+
+                            if(isset($_POST['signin'])){
+                                $username = mysqli_real_escape_string($conn, $_POST['your_name']);
+                                $your_pass = mysqli_real_escape_string($conn, $_POST['your_pass']);
+                                $hass_pass = sha1($your_pass);
+
+                                $login_query = "SELECT * FROM users WHERE u_name='$username' OR u_mail='$username'";
+                                $result = mysqli_query($conn,$login_query);
+                                while($row = mysqli_fetch_assoc($result)){
+                                $_SESSION['u_id']       = $row['u_id'];
+                                $_SESSION['u_name']     = $row['u_name'];
+                                $_SESSION['u_mail']     = $row['u_mail'];
+                                $u_pass                 = $row['u_pass'];
+                                $_SESSION['u_address']  = $row['u_address'];
+                                $_SESSION['u_phone']    = $row['u_phone'];
+                                $_SESSION['u_biodata']  = $row['u_biodata'];
+                                $_SESSION['u_gender']   = $row['u_gender'];
+                                $_SESSION['user_role']  = $row['user_role'];
+                                $_SESSION['u_status']   = $row['u_status'];
+                                $_SESSION['u_image']    = $row['u_image'];
+                                }
+                                // check the username & pass
+                                if(($_SESSION['u_name'] == $username || $_SESSION['u_mail'] == $username) && $u_pass ==  $hass_pass){
+                                    header('Location: dashboard.php');
+                                }
+                                elseif(($_SESSION['u_name'] != $username || $_SESSION['u_mail'] != $username) && $u_pass !=  $hass_pass){
+                                    header('Location: index.php');
+                                }
+                                else{
+                                    header('Location: index.php');
+                                }
+
+                            }
+                            // if
+                            
+                            ?>
+
                         <div class="social-login">
                             <span class="social-label">Or login with</span>
                             <ul class="socials">
@@ -61,6 +107,7 @@
 
     <!-- JS -->
     <script src="login-assets/vendor/jquery/jquery.min.js"></script>
-    <script src="login-assets/js/main.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+    <script src="login-assets/js/main.js"></script>.
+    <?php ob_end_flush(); ?>
+</body>
 </html>

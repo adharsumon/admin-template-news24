@@ -11,3 +11,9 @@ textarea.custom_text.w-100 {
 .table-responsive table td a {
     text-decoration: none !IMPORTANT;
 }
+thead, tbody, tfoot, tr, td, th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    vertical-align: middle !important;
+}

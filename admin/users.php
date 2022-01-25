@@ -1,5 +1,12 @@
 <?php include "includes/header.php"; ?>
-
+<style>
+  thead, tbody, tfoot, tr, td, th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    vertical-align: middle !important;
+}
+</style>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -69,7 +76,18 @@
                                                         <tr>
                                                         <td><?php echo $count; ?></td>
                                                         <td>
-                                                            <img src="assets/images/users/<?php echo $u_image; ?>" width="80px" >
+                                                          <?php 
+                                                            if(empty($u_image)){
+                                                              ?>
+                                                              <img src="assets/images/users/default.png" width="80px">
+                                                              <?php
+                                                            }else{
+                                                              ?>
+                                                              <img src="assets/images/users/<?php echo $u_image; ?>" width="80px">
+                                                              <?php
+                                                            }
+                                                          ?>
+                                                            
                                                         </td>
                                                         <td><?php echo $u_name; ?></td>
                                                         <td><?php echo $u_mail; ?></td>
@@ -78,20 +96,20 @@
                                                         <td><?php echo $u_gender; ?></td>
                                                         <td><?php 
                                                             if($user_role == 0){
-                                                                echo '<span class="badge bg-success">Subscriber</span>';
+                                                                echo '<span class="badge bg-success" style="padding:5px !important">Subscriber</span>';
                                                             }elseif($user_role == 1){
-                                                                echo '<span class="badge bg-info">Editor</span>';
+                                                                echo '<span class="badge bg-info" style="padding:5px !important">Editor</span>';
                                                             }elseif($user_role == 2){
-                                                                echo '<span class="badge bg-danger">Admin</span>';
+                                                                echo '<span class="badge bg-danger" style="padding:5px !important">Admin</span>';
                                                             }
                                                          ?></td>
                                                         <td>
                                                             <?php 
                                                             if($u_status == 0){
-                                                                echo '<span class="badge bg-success">Active</span>';
+                                                                echo '<span class="badge bg-success"style="padding:5px !important">Active</span>';
                                                             }
                                                             else{
-                                                                echo '<span class="badge bg-danger">Active</span>';
+                                                                echo '<span class="badge bg-danger"style="padding:5px !important">Inactive</span>';
                                                             }
                                                         
                                                             ?>

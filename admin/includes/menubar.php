@@ -17,8 +17,8 @@
             </a>
             <div class="collapse" id="posts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link text-capitalize" href="pages/ui-features/buttons.html">Add new</a></li>
-                <li class="nav-item"> <a class="nav-link text-capitalize" href="pages/ui-features/dropdowns.html">view all</a></li>
+                <li class="nav-item"> <a class="nav-link text-capitalize" href="posts.php?do=Add">Add new</a></li>
+                <li class="nav-item"> <a class="nav-link text-capitalize" href="posts.php?do=Manage">view all</a></li>
                 <li class="nav-item"> <a class="nav-link text-capitalize" href="category.php">category</a></li>
                 <li class="nav-item"> <a class="nav-link text-capitalize" href="pages/ui-features/typography.html">tags</a></li>
               </ul>

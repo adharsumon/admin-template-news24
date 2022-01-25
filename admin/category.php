@@ -26,13 +26,21 @@
 // ********************
 if(isset($_GET['delete_id'])){
     $del_id = $_GET['delete_id'];
-    $delete_query = "DELETE FROM category where cat_id = '$del_id'";
-    $result = mysqli_query($conn, $delete_query);
-    if($result){
-        header('Location: category.php');
-    }else{
-        die('delete error.'.mysqli_error($conn));
-    }
+
+    // function code start
+    $table  = 'category';
+    $key    = 'cat_id';
+    $redirect   = 'category.php';
+    delete($table,$key,$del_id,$redirect);
+    // function code end
+
+    // $delete_query = "DELETE FROM category where cat_id = '$del_id'";
+    // $result = mysqli_query($conn, $delete_query);
+    // if($result){
+    //     header('Location: category.php');
+    // }else{
+    //     die('delete error.'.mysqli_error($conn));
+    // }
 }
 
 
