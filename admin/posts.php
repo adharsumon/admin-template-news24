@@ -127,7 +127,7 @@
                               </td>
                               <td>
                                   <a href="posts.php?do=Edit&edit_id=<?php echo $p_id ?>"><i class="mdi mdi-grease-pencil"></i> </a>
-                                  <a href="" class="ms-2"><i class="mdi mdi-account-star"></i> </a>
+                                 
                                   <a href="" class="ms-2" data-bs-toggle="modal"
                                       data-bs-target="#delete_id<?php echo $p_id?>"> <i
                                           class="mdi mdi-delete text-danger"></i> </a>
@@ -173,15 +173,298 @@
 
                     elseif($do == 'Add'){
                         // Add a new user
-                        echo 'Add';
+                        ?>
+      <div class="row">
+            <div class="col-lg-10 col-md-12 d-flex flex-column">
+                <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Add New Post</h4>
+                  <p class="card-description">
+                    User Form
+                  </p>
+
+
+                  <form class="forms-sample" method="POST" enctype="multipart/form-data">
+
+                    <div class="form-group row">
+                      <label for="post_title" class="col-sm-3 col-form-label">Post Title</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="post_title" placeholder="Title" name="post_title">
+                      </div>
+                    </div>
+                   
+                    <div class="form-group row">
+                      <label for="description" class="col-sm-3 col-form-label">Description</label>
+                      <div class="col-sm-9">
+                        <textarea class="custom_text w-100" name="description" rows="8" placeholder="Description"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="category" class="col-sm-3 col-form-label">Category</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="category" id="category">
+                            <option selected>Select post category</option>
+
+                            <?php
+                             $read_query = "SELECT * FROM category";
+                             $result = mysqli_query($conn,$read_query);
+                             while($row = mysqli_fetch_assoc($result)){
+                             $cat_id = $row['cat_id'];
+                             $c_name = $row['c_name'];
+                             $c_desc = $row['c_desc'];
+                             $c_status = $row['c_status'];
+
+                             ?>
+                             <option value="<?php echo $cat_id;?>"><?php echo $c_name;?></option>
+                             <?php
+
+                             }
+                            ?>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="tags" class="col-sm-3 col-form-label">Tags</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="tags" placeholder="Tags" name="tags">
+                        <small>Separate your tags with comma(,) .</small>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="image" class="col-sm-3 col-form-label">Featured Image</label>
+                      <div class="col-sm-9">
+                        <input type="file" class="form-control" id="image" name="image">
+                        <small>Please insert a png/jpg/jpeg format photo only.</small>
+                      </div>
+                    </div>
+
+                    <button type="submit" name="add_post" class="btn btn-lg btn-success me-2 text-light">Publish</button>
+                    <button class="btn btn-lg btn-light">Cancel</button>
+                  </form>
+
+                  <!-- Add User Code start Here -->
+                  <?php 
+
+                    if(isset($_POST['add_post'])){
+                        $author_id = $_SESSION['u_id'];
+                        $post_title = mysqli_real_escape_string($conn,$_POST['post_title']);
+                        $description = mysqli_real_escape_string($conn,$_POST['description']);
+                        $category = $_POST['category'];
+                        $tags = $_POST['tags'];
+                        $user_image     =$_FILES['image']['name'];
+                        $file_size     =$_FILES['image']['size'];
+                        $tmp_name       =$_FILES['image']['tmp_name'];                        
+                        $split_name     = explode('.', $_FILES['image']['name']);
+                        $extn           = end($split_name);
+                        $extn           = strtolower($extn);
+                        $extensions     = array('png', 'jpg', 'jpeg');
+
+                        if(in_array($extn, $extensions) === true && $file_size < 2097152){
+                         // image
+                            $random = rand();
+                            $updated_name = $random.'_'.$user_image;
+                            move_uploaded_file($tmp_name, 'assets/images/posts/'.$updated_name);
+
+                            $post_query = "INSERT INTO posts (p_title, p_desc, p_thumbnail, p_author, p_cat, p_date, p_tags, p_status) VALUES ('$post_title', '$description', '$updated_name', '$author_id', '$category', now(), '$tags', 0)";
+                            $result7 = mysqli_query($conn, $post_query);
+                                if($result7){
+                                  header('Location: posts.php');
+                                }else{
+                                  die('Post information add error'.mysqli_error($conn));
+                                }
+
+                        }else{
+                            echo '<span class="alert alert-danger">Please insert an image</span>';
+                        }
+                    }
+                  
+                  ?>
+                  <!-- Add User Code end Here -->
+
+                </div>
+              </div>
+            </div>
+        </div>
+                        <?php
                     }
 
                     elseif($do == 'Edit'){
                         // Edit a new user
+
+                        if(isset($_GET['edit_id'])){
+                          $post_id = $_GET['edit_id'];
+
+                          $post_query = "SELECT * FROM posts WHERE p_id='$post_id'";
+                          $result = mysqli_query($conn,$post_query);
+                          while($row = mysqli_fetch_assoc($result)){
+                              $p_title     	= $row['p_title'];
+                              $p_desc     	= $row['p_desc'];
+                              $p_thumbnail    = $row['p_thumbnail'];
+                              $p_author  		= $row['p_author'];
+                              $p_cat    		= $row['p_cat'];
+                              $p_date  		= $row['p_date'];
+                              $p_tags   		= $row['p_tags'];
+                              $p_status  		= $row['p_status'];
+                            }
+                            ?>
+
+<div class="row">
+            <div class="col-lg-10 col-md-12 d-flex flex-column">
+                <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Update Post</h4>
+                  <p class="card-description">
+                    User Form
+                  </p>
+
+
+                  <form class="forms-sample" method="POST" action="posts.php?do=Update" enctype="multipart/form-data">
+
+                    <div class="form-group row">
+                      <label for="post_title" class="col-sm-3 col-form-label">Post Title</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="post_title" placeholder="Title" name="post_title" value="<?php echo $p_title; ?>">
+                      </div>
+                    </div>
+                   
+                    <div class="form-group row">
+                      <label for="description" class="col-sm-3 col-form-label">Description</label>
+                      <div class="col-sm-9">
+                        <textarea class="custom_text w-100" name="description" rows="8" placeholder="Description" value="<?php echo $p_desc; ?>"><?php echo $p_desc; ?></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="category" class="col-sm-3 col-form-label">Category</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="category" id="category">
+                            <option selected>Select post category</option>
+
+                            <?php
+                             $read_query = "SELECT * FROM category";
+                             $result = mysqli_query($conn,$read_query);
+                             while($row = mysqli_fetch_assoc($result)){
+                             $cat_id = $row['cat_id'];
+                             $c_name = $row['c_name'];
+                             $c_desc = $row['c_desc'];
+                             $c_status = $row['c_status'];
+
+                             ?>
+                             <option value="<?php echo $cat_id;?>" <?php if($p_cat == $cat_id) echo 'selected'; ?>><?php echo $c_name;?></option>
+                             <?php
+
+                             }
+                            ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="status" class="col-sm-3 col-form-label">Status</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="status" id="status">
+                            <option selected>Select post status</option>
+                            <option value="0" <?php if($p_status == 0) echo 'selected'; ?>>Active</option>
+                            <option value="1" <?php if($p_status == 1) echo 'selected'; ?>>Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="tags" class="col-sm-3 col-form-label">Tags</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="tags" placeholder="Tags" name="tags" value="<?php echo $p_tags; ?>">
+                        <small>Separate your tags with comma(,) .</small>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="image" class="col-sm-3 col-form-label">Featured Image</label>
+                      <div class="col-sm-9">
+
+                      <?php 
+                      if(!empty($p_thumbnail)){
+                        ?>
+                        <img src="assets/images/posts/<?php echo $p_thumbnail; ?>" alt="" width="140px"> <br><br>
+                        <?php
+                      }
+                      ?>
+
+                        <input type="file" class="form-control" id="image" name="image">
+                        <small>Please insert a png/jpg/jpeg format photo only.</small>
+                      </div>
+                    </div>
+
+                    <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+
+                    <button type="submit" name="add_post" class="btn btn-lg btn-success me-2 text-light">Update</button>
+                    <button class="btn btn-lg btn-light">Cancel</button>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+        </div>
+
+                            <?php
+                        }
                     }
 
                     elseif($do == 'Update'){
-                        // Update a new user
+                        // Update a new post
+                      if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                        $edit_post_id = $_POST['post_id'];
+                        $post_title = $_POST['post_title'];
+                        $description = $_POST['description'];
+                        $category = $_POST['category'];
+                        $status = $_POST['status'];
+                        $tags = $_POST['tags'];
+                        $user_image     =$_FILES['image']['name'];
+                        $file_size     =$_FILES['image']['size'];
+                        $tmp_name       =$_FILES['image']['tmp_name']; 
+                        
+                        if(!empty($user_image)){
+                          $split_name     = explode('.', $_FILES['image']['name']);
+                          $extn           = end($split_name);
+                          $extn           = strtolower($extn);
+                          $extensions     = array('png', 'jpg', 'jpeg');
+
+                          if(in_array($extn, $extensions) === true && $file_size < 2097152){
+                            // Delete post image first 
+                            delete_files('posts','p_id',$edit_post_id,'p_thumbnail','posts');
+
+                            // image
+                                // random number
+                                $random = rand();
+                                $updated_name = $random.'_'.$user_image;
+                                move_uploaded_file($tmp_name, 'assets/images/posts/'.$updated_name);
+
+                                $post_update = "UPDATE posts SET p_title='$post_title', p_desc='$description', 	p_thumbnail='$updated_name', p_cat='$category', p_tags='$tags', p_status='$status' WHERE p_id='$edit_post_id'";
+                                $result8 = mysqli_query($conn, $post_update);
+                                if($result8){
+                                  header('Location: posts.php');
+                                }else{
+                                  die('Post update error'.mysqli_error($conn));
+                                }
+                          }else{
+                            echo '<span>Please Select An Image For Post. (png, jpg, jpeg)</span>';
+                          }
+                        }
+                        else{
+                          $post_update = "UPDATE posts SET p_title='$post_title', p_desc='$description', p_cat='$category', p_tags='$tags', p_status='$status' WHERE p_id='$edit_post_id'";
+                            $result8 = mysqli_query($conn, $post_update);
+                            if($result8){
+                              header('Location: posts.php');
+                            }else{
+                              die('Post update error'.mysqli_error($conn));
+                            }
+                        }
+                        
+                      }
+
                     }
 
                     elseif($do == 'Delete'){

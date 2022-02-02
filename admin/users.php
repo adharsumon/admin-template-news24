@@ -291,7 +291,7 @@
                      
                     }else{
                       // not image
-                      echo '<span class="alert alert-danger">Please insert an image</span>';
+                      echo '<span class="alert alert-danger">Please upload an image (png, jpg, jpeg)</span>';
                     }                   
 
 
@@ -572,17 +572,8 @@
                             }else{
                               die('User update error'.mysqli_error($conn));
                             }
-                          }
-
-
-
-
-
-
-
+                          }       
                           
-                          
-
                         } // if end
 
                     }

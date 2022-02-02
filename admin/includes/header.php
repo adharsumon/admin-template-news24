@@ -3,6 +3,9 @@ include "connection.php";
 include "function.php"; 
 ob_start();
 session_start();
+if($_SESSION['user_role'] == 0){
+  header('Location: ../index.php');
+}
 if(empty($_SESSION['u_id'])){
   header('Location: index.php');
 }

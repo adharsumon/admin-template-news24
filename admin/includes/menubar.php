@@ -8,24 +8,32 @@
             </a>
           </li>
 
-          <li class="nav-item nav-category">Posts Management</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#posts" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-floor-plan"></i>
-              <span class="menu-title">Posts</span>
-              <i class="menu-arrow"></i> 
-            </a>
-            <div class="collapse" id="posts">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link text-capitalize" href="posts.php?do=Add">Add new</a></li>
-                <li class="nav-item"> <a class="nav-link text-capitalize" href="posts.php?do=Manage">view all</a></li>
-                <li class="nav-item"> <a class="nav-link text-capitalize" href="category.php">category</a></li>
-                <li class="nav-item"> <a class="nav-link text-capitalize" href="pages/ui-features/typography.html">tags</a></li>
-              </ul>
-            </div>
-          </li>
+         <?php 
 
-          <li class="nav-item nav-category">Users Management</li>
+         if($_SESSION['user_role'] == 2 || $_SESSION['user_role'] == 1){
+           ?>
+            <li class="nav-item nav-category">Posts Management</li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#posts" aria-expanded="false" aria-controls="ui-basic">
+                  <i class="menu-icon mdi mdi-floor-plan"></i>
+                  <span class="menu-title">Posts</span>
+                  <i class="menu-arrow"></i> 
+                </a>
+                <div class="collapse" id="posts">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link text-capitalize" href="posts.php?do=Add">Add new</a></li>
+                    <li class="nav-item"> <a class="nav-link text-capitalize" href="posts.php?do=Manage">view all</a></li>
+                    <li class="nav-item"> <a class="nav-link text-capitalize" href="category.php">category</a></li>
+                  </ul>
+                </div>
+              </li>
+           <?php
+         }
+
+         if($_SESSION['user_role'] == 2){
+          ?>
+
+<li class="nav-item nav-category">Users Management</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="ui-basic">
               <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -58,6 +66,10 @@
           <li class="nav-item">
             <a href=""></a>
           </li>
-          
+
+          <?php
+         }
+         
+         ?>
         </ul>
       </nav>
