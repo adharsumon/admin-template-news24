@@ -94,7 +94,7 @@
 																echo $author_name;
 															?>
 														</td>
-                                                        <td>
+                            <td>
 														<?php 
 																$category_name_sql = "SELECT c_name FROM category WHERE cat_id='$p_cat'";
 																$result_c = mysqli_query($conn, $category_name_sql);
@@ -308,6 +308,7 @@
                               $p_date  		= $row['p_date'];
                               $p_tags   		= $row['p_tags'];
                               $p_status  		= $row['p_status'];
+                              $is_featured  		= $row['is_featured'];
                             }
                             ?>
 
@@ -372,6 +373,17 @@
                         </select>
                       </div>
                     </div>
+
+                    <div class="form-group row">
+                      <label for="featured" class="col-sm-3 col-form-label">Featured</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="featured" id="featured">
+                            <option selected>Select post status</option>
+                            <option value="0" <?php if($is_featured == 0) echo 'selected'; ?>>Normal</option>
+                            <option value="1" <?php if($is_featured == 1) echo 'selected'; ?>>Featured</option>
+                        </select>
+                      </div>
+                    </div>
                     
                     <div class="form-group row">
                       <label for="tags" class="col-sm-3 col-form-label">Tags</label>
@@ -421,6 +433,7 @@
                         $description = $_POST['description'];
                         $category = $_POST['category'];
                         $status = $_POST['status'];
+                        $featured = $_POST['featured'];
                         $tags = $_POST['tags'];
                         $user_image     =$_FILES['image']['name'];
                         $file_size     =$_FILES['image']['size'];
@@ -442,7 +455,7 @@
                                 $updated_name = $random.'_'.$user_image;
                                 move_uploaded_file($tmp_name, 'assets/images/posts/'.$updated_name);
 
-                                $post_update = "UPDATE posts SET p_title='$post_title', p_desc='$description', 	p_thumbnail='$updated_name', p_cat='$category', p_tags='$tags', p_status='$status' WHERE p_id='$edit_post_id'";
+                                $post_update = "UPDATE posts SET p_title='$post_title', p_desc='$description', 	p_thumbnail='$updated_name', p_cat='$category', p_tags='$tags', p_status='$status', is_featured='$featured' WHERE p_id='$edit_post_id'";
                                 $result8 = mysqli_query($conn, $post_update);
                                 if($result8){
                                   header('Location: posts.php');
@@ -454,7 +467,7 @@
                           }
                         }
                         else{
-                          $post_update = "UPDATE posts SET p_title='$post_title', p_desc='$description', p_cat='$category', p_tags='$tags', p_status='$status' WHERE p_id='$edit_post_id'";
+                          $post_update = "UPDATE posts SET p_title='$post_title', p_desc='$description', p_cat='$category', p_tags='$tags', p_status='$status', is_featured='$featured' WHERE p_id='$edit_post_id'";
                             $result8 = mysqli_query($conn, $post_update);
                             if($result8){
                               header('Location: posts.php');
