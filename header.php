@@ -1,6 +1,9 @@
 <?php
 
 	include "admin/includes/connection.php";
+	include "admin/includes/function.php";
+
+    session_start();
 
 ?>
 
@@ -39,109 +42,186 @@
 <body id="top">
 
 
-    <!-- preloader
-    ================================================== -->
-    <div id="preloader">
-        <div id="loader" class="dots-fade">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+<!-- preloader
+================================================== -->
+<div id="preloader">
+    <div id="loader" class="dots-fade">
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
+</div>
 
 
-    <!-- page wrap
+<!-- page wrap
+================================================== -->
+<div id="page" class="s-pagewrap ss-home">
+
+
+    <!-- # site header 
     ================================================== -->
-    <div id="page" class="s-pagewrap ss-home">
+    <header id="masthead" class="s-header">
+
+        <div class="s-header__branding">
+            <p class="site-title">
+                <a href="index.php" rel="">Spurgeon.</a>                    
+            </p>
+        </div>
+
+        <div class="row s-header__navigation">
+
+            <nav class="s-header__nav-wrap">
+
+                <h3 class="s-header__nav-heading">Navigate to</h3>
+
+                <ul class="s-header__nav">
+
+                <?php 
+                $read_query = "SELECT * FROM category WHERE c_status = '0' ORDER BY c_name ASC";
+                $result2 = mysqli_query($conn,$read_query);
+                while($row = mysqli_fetch_assoc($result2)){
+                    $cat_id = $row['cat_id'];
+                    $c_name = $row['c_name'];
+                    $c_desc = $row['c_desc'];
+                    $c_status = $row['c_status'];
+                    ?>
+                    <li class=""><a href="archive.php?cat_id=<?php echo $cat_id;?>" title=""><?php echo $c_name; ?></a></li>
+                    <?php
+                }
+                ?>
+                    
 
 
-        <!-- # site header 
-        ================================================== -->
-        <header id="masthead" class="s-header">
+                    <!-- <li class="has-children current-menu-item">
+                        <a href="#0" title="" class="">Categories</a>
+                        <ul class="sub-menu">
+                            <li><a href="category.html">Design</a></li>
+                            <li><a href="category.html">Lifestyle</a></li>
+                            <li><a href="category.html">Inspiration</a></li>
+                            <li><a href="category.html">Work</a></li>
+                            <li><a href="category.html">Health</a></li>
+                            <li><a href="category.html">Photography</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <a href="#0" title="" class="">Blog</a>
+                        <ul class="sub-menu">
+                            <li><a href="single-standard.html">Standard Post</a></li>
+                            <li><a href="single-video.html">Video Post</a></li>
+                            <li><a href="single-audio.html">Audio Post</a></li>
+                        </ul>
+                    </li> -->
+                    <!-- <li><a href="styles.html" title="">Styles</a></li>
+                    <li><a href="about.html" title="">About</a></li>
+                    <li><a href="contact.html" title="">Contact</a></li> -->
+                </ul> <!-- end s-header__nav -->
 
-            <div class="s-header__branding">
-                <p class="site-title">
-                    <a href="index.php" rel="">Spurgeon.</a>                    
-                </p>
-            </div>
+            </nav> <!-- end s-header__nav-wrap -->
 
-            <div class="row s-header__navigation">
+        </div> <!-- end s-header__navigation -->
 
-                <nav class="s-header__nav-wrap">
     
-                    <h3 class="s-header__nav-heading">Navigate to</h3>
-    
-                    <ul class="s-header__nav">
 
-                    <?php 
-                    $read_query = "SELECT * FROM category WHERE c_status = '0' ORDER BY c_name ASC";
-                    $result2 = mysqli_query($conn,$read_query);
-                    while($row = mysqli_fetch_assoc($result2)){
-                        $cat_id = $row['cat_id'];
-                        $c_name = $row['c_name'];
-                        $c_desc = $row['c_desc'];
-                        $c_status = $row['c_status'];
+        <div class="s-header__search">
+
+            <div class="s-header__search-inner">
+                <div class="row">
+
+                    <form role="search" method="GET" class="s-header__search-form" action="search.php">
+                        <label>
+                            <span class="u-screen-reader-text">Search for:</span>
+                            <input type="search" class="s-header__search-field" placeholder="Search for..." value="" name="q" title="Search for:" autocomplete="off">
+                        </label>
+                        <input type="submit" class="s-header__search-submit" value="Search"> 
+                    </form>
+
+                    <a href="#0" title="Close Search" class="s-header__search-close">Close</a>
+
+                </div> <!-- end row -->
+            </div> <!-- s-header__search-inner -->
+
+        </div> <!-- end s-header__search -->
+
+        <div class="trigger">
+            <a class="s-header__search-trigger" href="#"><i class="fa fa-search"></i></a>
+                    
+                <?php 
+                    if(empty($_SESSION['u_id'])){
                         ?>
-                        <li class=""><a href="" title=""><?php echo $c_name; ?></a></li>
+                        <a class="s-header__search-trigger login" href="admin/index.php">Login</a>
+                        <?php
+                    }else{
+                        $user_id = $_SESSION['u_id'];
+                        ?>
+
+                        <div class="comment__avatarr">                      
+
+
+                        <?php 
+
+                            $user_query = "SELECT * FROM users WHERE u_id = '$user_id'";
+                            $result = mysqli_query($conn,$user_query);
+                            while($row = mysqli_fetch_assoc($result)){
+                                $u_id       = $row['u_id'];
+                                $u_name     = $row['u_name'];
+                                $u_mail     = $row['u_mail'];
+                                $u_pass     = $row['u_pass'];
+                                $u_address  = $row['u_address'];
+                                $u_phone    = $row['u_phone'];
+                                $u_biodata  = $row['u_biodata'];
+                                $u_gender   = $row['u_gender'];
+                                $user_role  = $row['user_role'];
+                                $u_status   = $row['u_status'];
+                                $u_image    = $row['u_image'];
+                                ?>
+                                
+                                <?php
+                                    }                                    
+                                    
+                            ?>                            
+
+                            <?php 
+                            if(empty($u_image)){
+                                ?>                        
+                                    <ul class="s-header__nav">
+                                        <li class="has-children" style="display: inline-block;">
+                                            <a class="s-header__search-trigger logout" style="width: 50px; height: 50px;">
+                                            <img src="admin/assets/images/users/default.png" > 
+                                            </a>
+                                            <ul class="sub-menu mb-5" style="display: inline-block;">
+                                                <li style="display: inline-block;"><a href="admin/includes/logout.php" style="display: inline-block;">Logout</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>   
+                                
+                                <?php
+                            }else{
+                                ?>  
+                                    <ul class="s-header__nav">
+                                        <li class="has-children" style="display: inline-block;">
+                                            <a class="s-header__search-trigger logout" style="width: 50px; height: 50px;">
+                                            <img src="admin/assets/images/users/<?php echo $u_image; ?>" > 
+                                            </a>
+                                            <ul class="sub-menu mb-5" style="display: inline-block;">
+                                                <li style="display: inline-block;"><a href="admin/includes/logout.php" style="display: inline-block;">Logout</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>              
+              
+                                <?php
+                            }
+                            ?>
+                            
+                            
+                        </div>
                         <?php
                     }
-                    ?>
-                       
-
-
-                        <!-- <li class="has-children current-menu-item">
-                            <a href="#0" title="" class="">Categories</a>
-                            <ul class="sub-menu">
-                                <li><a href="category.html">Design</a></li>
-                                <li><a href="category.html">Lifestyle</a></li>
-                                <li><a href="category.html">Inspiration</a></li>
-                                <li><a href="category.html">Work</a></li>
-                                <li><a href="category.html">Health</a></li>
-                                <li><a href="category.html">Photography</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-children">
-                            <a href="#0" title="" class="">Blog</a>
-                            <ul class="sub-menu">
-                                <li><a href="single-standard.html">Standard Post</a></li>
-                                <li><a href="single-video.html">Video Post</a></li>
-                                <li><a href="single-audio.html">Audio Post</a></li>
-                            </ul>
-                        </li> -->
-                        <!-- <li><a href="styles.html" title="">Styles</a></li>
-                        <li><a href="about.html" title="">About</a></li>
-                        <li><a href="contact.html" title="">Contact</a></li> -->
-                    </ul> <!-- end s-header__nav -->
-
-                </nav> <!-- end s-header__nav-wrap -->
-    
-            </div> <!-- end s-header__navigation -->
-
-            <div class="s-header__search">
-
-                <div class="s-header__search-inner">
-                    <div class="row">
-    
-                        <form role="search" method="get" class="s-header__search-form" action="#">
-                            <label>
-                                <span class="u-screen-reader-text">Search for:</span>
-                                <input type="search" class="s-header__search-field" placeholder="Search for..." value="" name="s" title="Search for:" autocomplete="off">
-                            </label>
-                            <input type="submit" class="s-header__search-submit" value="Search"> 
-                        </form>
-    
-                        <a href="#0" title="Close Search" class="s-header__search-close">Close</a>
-    
-                    </div> <!-- end row -->
-                </div> <!-- s-header__search-inner -->
-    
-            </div> <!-- end s-header__search -->
-
+                ?>               
+            
+                <!-- <a class="s-header__search-trigger login" href="">Login</a> -->
             <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
-            <a class="s-header__search-trigger" href="#">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z"></path>
-                </svg>
-            </a>
+        </div>
 
-        </header> <!-- end s-header -->
+
+
+    </header> <!-- end s-header -->

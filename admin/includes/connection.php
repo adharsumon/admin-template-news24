@@ -4,7 +4,7 @@
    if($conn){
     //    echo 'Database is connected';
    }else{
-       die('database connection error!'.mysqli_connect($conn));
+       die('Database connection error!'.mysqli_error($conn));
    }
 
 ?>

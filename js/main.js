@@ -83,7 +83,7 @@
         window.addEventListener('resize', function() {
 
             // above 1200px
-            if (window.matchMedia('(min-width: 992px)').matches) {
+            if (window.matchMedia('(min-width: 1201px)').matches) {
                 if (siteBody.classList.contains('menu-is-open')) siteBody.classList.remove('menu-is-open');
                 if (toggleButton.classList.contains('is-clicked')) toggleButton.classList.remove('is-clicked');
                 if (!scrollLock.getScrollState()) scrollLock.enablePageScroll();
@@ -255,16 +255,7 @@
                 renderBullet: function (index, className) {
                     return '<span class="' + className + '">' + (index + 1) + '</span>';
                 }
-            }
-
-            $('.swiper-container').on('mouseenter', function(e){
-                console.log('stop autoplay');
-                mySwiper.stopAutoplay();
-              })
-              $('.swiper-container').on('mouseleave', function(e){
-                console.log('start autoplay');
-                mySwiper.startAutoplay();
-              })
+            }           
 
         });
         

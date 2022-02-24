@@ -55,10 +55,10 @@
                                                     $p_id       	= $row['p_id'];
                                                     $p_title     	= $row['p_title'];
                                                     $p_desc     	= $row['p_desc'];
-                                                    $p_thumbnail    = $row['p_thumbnail'];
+                                                    $p_thumbnail  = $row['p_thumbnail'];
                                                     $p_author  		= $row['p_author'];
                                                     $p_cat    		= $row['p_cat'];
-                                                    $p_date  		= $row['p_date'];
+                                                    $p_date  		  = $row['p_date'];
                                                     $p_tags   		= $row['p_tags'];
                                                     $p_status  		= $row['p_status'];
                                                     $count++;

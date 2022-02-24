@@ -1,6 +1,7 @@
 <?php
 
 	include "admin/includes/connection.php";
+    session_start();
 
 ?>
 
@@ -82,7 +83,7 @@
                         $c_desc = $row['c_desc'];
                         $c_status = $row['c_status'];
                         ?>
-                        <li class=""><a href="" title=""><?php echo $c_name; ?></a></li>
+                        <li class=""><a href="archive.php?cat_id=<?php echo $cat_id;?>" title=""><?php echo $c_name; ?></a></li>
                         <?php
                     }
                     ?>
@@ -122,10 +123,10 @@
                 <div class="s-header__search-inner">
                     <div class="row">
     
-                        <form role="search" method="get" class="s-header__search-form" action="#">
+                        <form role="search" method="GET" class="s-header__search-form" action="search.php">
                             <label>
                                 <span class="u-screen-reader-text">Search for:</span>
-                                <input type="search" class="s-header__search-field" placeholder="Search for..." value="" name="s" title="Search for:" autocomplete="off">
+                                <input type="search" class="s-header__search-field" placeholder="Search for..." value="" name="q" title="Search for:" autocomplete="off">
                             </label>
                             <input type="submit" class="s-header__search-submit" value="Search"> 
                         </form>
@@ -137,11 +138,94 @@
     
             </div> <!-- end s-header__search -->
 
+            <div class="trigger">
+            <a class="s-header__search-trigger" href="#"><i class="fa fa-search"></i></a>
+                        
+                        <?php 
+                        if(empty($_SESSION['u_id'])){
+                            ?>
+                            <a class="s-header__search-trigger login" href="admin/index.php">Login</a>
+                            <?php
+                        }else{
+                            $user_id = $_SESSION['u_id'];
+                            ?>
+
+                            <div class="comment__avatarr ml">
+
+                           
+
+
+                            <?php 
+
+                                $user_query = "SELECT * FROM users WHERE u_id = '$user_id'";
+                                $result = mysqli_query($conn,$user_query);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    $u_id       = $row['u_id'];
+                                    $u_name     = $row['u_name'];
+                                    $u_mail     = $row['u_mail'];
+                                    $u_pass     = $row['u_pass'];
+                                    $u_address  = $row['u_address'];
+                                    $u_phone    = $row['u_phone'];
+                                    $u_biodata  = $row['u_biodata'];
+                                    $u_gender   = $row['u_gender'];
+                                    $user_role  = $row['user_role'];
+                                    $u_status   = $row['u_status'];
+                                    $u_image    = $row['u_image'];
+
+                                    ?>
+                                    
+                                    <?php
+                                     }
+                                     
+                                     
+                                ?>
+                                
+
+                                <?php 
+                                if(empty($u_image)){
+                                    ?>
+                            <nav class="s-header__nav-wrap">
+                                <ul class="s-header__nav">
+                                <li class="has-children ">
+                                <a class="s-header__search-trigger logout rr2" style="width: 50px; height: 50px;"><img src="admin/assets/images/users/default.png" width="80px">
+                                </a>
+                                <ul class="sub-menu mb-5">
+                                    <li><a href="admin/includes/logout.php">Logout</a></li>
+                                </ul>
+                                </li>
+                                </ul>
+                            </nav>
+                                   
+                                    
+                                    <?php
+                                }else{
+                                    ?>
+                            <nav class="s-header__nav-wrap">
+                                <ul class="s-header__nav">
+                                <li class="has-children ">
+                                <a class="s-header__search-trigger logout" style="width: 50px; height: 50px;">
+                                <img src="admin/assets/images/users/<?php echo $u_image; ?>" > 
+                                </a>
+                                <ul class="sub-menu mb-5">
+                                    <li><a href="admin/includes/logout.php">Logout</a></li>
+                                </ul>
+                                </li>
+                                </ul>
+                            </nav>                                    
+                                    
+                                    <?php
+                                }
+                                ?>
+                              
+                                
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    
+                
+                    <!-- <a class="s-header__search-trigger login" href="">Login</a> -->
             <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
-            <a class="s-header__search-trigger" href="#">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z"></path>
-                </svg>
-            </a>
+            </div>
 
         </header> <!-- end s-header -->

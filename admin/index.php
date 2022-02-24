@@ -2,7 +2,7 @@
 
     include "includes/connection.php";
     ob_start();
-    session_start();
+    session_start();    
 
 ?>
 <!DOCTYPE html>
@@ -76,7 +76,12 @@
                                 }
                                 // check the username & pass
                                 if(($_SESSION['u_name'] == $username || $_SESSION['u_mail'] == $username) && $u_pass ==  $hass_pass){
-                                    header('Location: dashboard.php');
+                                    if($_SESSION['user_role'] == 0){
+                                        header('Location: ../index.php');
+                                    }else{
+                                        header('Location: dashboard.php');
+                                    }
+                                    
                                 }
                                 elseif(($_SESSION['u_name'] != $username || $_SESSION['u_mail'] != $username) && $u_pass !=  $hass_pass){
                                     header('Location: index.php');

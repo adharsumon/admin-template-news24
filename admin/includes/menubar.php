@@ -57,7 +57,7 @@
             </a>
             <div class="collapse" id="comment">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link text-capitalize" href="pages/ui-features/dropdowns.html">view all</a></li>
+                <li class="nav-item"> <a class="nav-link text-capitalize" href="comments.php">view all</a></li>
               </ul>
             </div>
           </li>

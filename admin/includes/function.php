@@ -1,6 +1,6 @@
 <?php
 
-include "connection.php";
+// include "connection.php";
 
 // delete function for files or images
 function delete_files($table,$key,$del_id,$files,$folder_name){
