@@ -46,7 +46,7 @@ if(empty($_SESSION['u_id'])){
 </head>
 <body>
   <div class="container-scroller">
-    <div class="row p-0 m-0 proBanner" id="proBanner">
+    <!-- <div class="row p-0 m-0 proBanner" id="proBanner">
       <div class="col-md-12 p-0 m-0">
         <div class="card-body card-body-padding d-flex align-items-center justify-content-between">
           <div class="ps-lg-1">
@@ -63,7 +63,7 @@ if(empty($_SESSION['u_id'])){
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
@@ -74,7 +74,8 @@ if(empty($_SESSION['u_id'])){
         </div>
         <div>
           <a class="navbar-brand brand-logo" href="dashboard.php">
-            <img src="assets/images/logo.svg" alt="logo" />
+            <!-- <img src="assets/images/logo.svg" alt="logo" /> -->
+            News24
           </a>
           <a class="navbar-brand brand-logo-mini" href="dashboard.php">
             <img src="assets/images/logo-mini.svg" alt="logo" />
