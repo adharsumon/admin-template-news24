@@ -3780,6 +3780,9 @@ a.s-header__search-trigger.login:hover {
         line-height: 1.6;
         padding-left: 2.4rem;
     }
+    .ss-home .s-header__nav li > a {
+        font-size: 16px !important;
+    }
 
     .s-header__nav-wrap .s-header__nav>li a:hover {
         color: var(--color-1);
