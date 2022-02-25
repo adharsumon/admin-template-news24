@@ -237,7 +237,7 @@
                       <label for="image" class="col-sm-3 col-form-label">Featured Image</label>
                       <div class="col-sm-9">
                         <input type="file" class="form-control" id="image" name="image">
-                        <small>Please insert a png/jpg/jpeg format photo only.</small>
+                        <small>Please insert a png/jpg/jpeg format photo only. Less than 2mb.</small>
                       </div>
                     </div>
 
@@ -277,7 +277,7 @@
                                 }
 
                         }else{
-                            echo '<span class="alert alert-danger">Please insert an image</span>';
+                            echo '<span class="alert alert-danger">Please insert an image less than 2mb</span>';
                         }
                     }
                   

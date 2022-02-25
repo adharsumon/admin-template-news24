@@ -286,10 +286,13 @@
                 <div class="comment-respond">
 
                     <?Php 
-                        $current_user = $_SESSION['u_id'];
-                        if(empty($current_user)){
+                        // $current_user = $_SESSION['u_id'];
+                        if(empty($_SESSION['u_id'])){
                             echo '<h5 style="display: inline-block;text-transform: capitalize;">please login to submit a comment.</h5>  <a href="admin/index.php">Login</a>';
                         }else{
+                            $current_user = $_SESSION['u_id'];
+
+
                             ?>
                                 <div id="respond">
 

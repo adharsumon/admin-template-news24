@@ -4,7 +4,7 @@ include "header.php";
 ?>
 
 <?php 
-    $posts_pp       = 3;
+    $posts_pp       = 5;
     $current_page   = 1;
     
     $starting       = 0;

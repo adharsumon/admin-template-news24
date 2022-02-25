@@ -7,14 +7,10 @@
             <div class="row s-footer__main">
 
                 <div class="column lg-5 md-6 tab-12 s-footer__about">
-                    <h4>Spurgeon</h4>
+                    <h4>News24</h4>
 
                     <p>
-                    Lorem ipsum dolor sit amet, consectetur 
-                    adipiscing elit, sed do eiusmod tempor 
-                    incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation 
-                    ullamco laboris nisi ut aliquip ex ea commodo 
+                    News24 is a Blog Website. Created using raw PHP coding and it's fully dynamic website. User friendly and easily customizable. Users can register here, and can visit all posts too. Users will post here and will leave their comments too. Three types of users can be joined here as a Subscriber, editor & Admin. Join Today & Get Daily New Latest Posts!!!
                     </p>
                 </div> <!-- end s-footer__about -->
 
@@ -79,7 +75,7 @@
                 </div>
                 <div class="column lg-5 md-6 tab-12">
                     <div class="ss-copyright">
-                        <span>© Copyright Spurgeon 2022</span> 
+                        <span> News24 2022</span> 
                         <span>Developed by <a href="#">Sumon</a></span>
                     </div>
                 </div>
